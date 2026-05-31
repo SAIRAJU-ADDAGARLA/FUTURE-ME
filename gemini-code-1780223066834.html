@@ -1,0 +1,1026 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FutureMe — Meet the version of you who already made it.</title>
+    <style>
+        :root {
+            --bg-base: #030303;
+            --bg-surface: rgba(10, 10, 10, 0.7);
+            --bg-surface-elevated: rgba(20, 20, 20, 0.8);
+            --border-subtle: rgba(255, 255, 255, 0.08);
+            --border-glow: rgba(255, 255, 255, 0.16);
+            --text-primary: #f5f5f7;
+            --text-secondary: #86868b;
+            --text-tertiary: #6e6e73;
+            --accent: #ffffff;
+            --accent-gradient: linear-gradient(135deg, #ffffff 0%, #a1a1a6 100%);
+            --glow-purple: rgba(147, 51, 234, 0.15);
+            --glow-blue: rgba(59, 130, 246, 0.15);
+            --font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, sans-serif;
+            --easing: cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        body {
+            background-color: var(--bg-base);
+            color: var(--text-primary);
+            font-family: var(--font-sans);
+            overflow-x: hidden;
+            line-height: 1.5;
+        }
+
+        /* Ambient Background Backgrounds */
+        .ambient-glow-1 {
+            position: fixed;
+            top: -10%;
+            left: -10%;
+            width: 60vw;
+            height: 60vw;
+            background: radial-gradient(circle, var(--glow-purple) 0%, transparent 70%);
+            z-index: -2;
+            pointer-events: none;
+            animation: floatGlow 25s infinite alternate var(--easing);
+        }
+
+        .ambient-glow-2 {
+            position: fixed;
+            bottom: -10%;
+            right: -10%;
+            width: 50vw;
+            height: 50vw;
+            background: radial-gradient(circle, var(--glow-blue) 0%, transparent 70%);
+            z-index: -2;
+            pointer-events: none;
+            animation: floatGlow 30s infinite alternate-reverse var(--easing);
+        }
+
+        .grid-pattern {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: linear-gradient(rgba(255,255,255,0.01) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.01) 1px, transparent 1px);
+            background-size: 40px 40px;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        @keyframes floatGlow {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(5%, 5%) scale(1.1); }
+        }
+
+        /* Typography & Layout Utilities */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 1.2s var(--easing), transform 1.2s var(--easing);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Glassmorphism Styles */
+        .glass-panel {
+            background: var(--bg-surface);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--border-subtle);
+            border-radius: 16px;
+            transition: border-color 0.4s var(--easing), transform 0.4s var(--easing), box-shadow 0.4s var(--easing);
+        }
+
+        .glass-panel:hover {
+            border-color: var(--border-glow);
+        }
+
+        /* Buttons & Inputs */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.875rem 1.75rem;
+            border-radius: 9999px;
+            font-size: 0.95rem;
+            font-weight: 500;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s var(--easing);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: #000;
+            border: 1px solid var(--accent);
+        }
+
+        .btn-primary:hover {
+            background: transparent;
+            color: var(--text-primary);
+            box-shadow: 0 0 25px rgba(255,255,255,0.15);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.04);
+            color: var(--text-primary);
+            border: 1px solid var(--border-subtle);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        /* Dynamic Ripple */
+        .ripple {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            transform: scale(0);
+            animation: rippleEffect 0.6s linear;
+            pointer-events: none;
+        }
+
+        @keyframes rippleEffect {
+            to { transform: scale(4); opacity: 0; }
+        }
+
+        /* Navigation */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 100;
+            background: rgba(3, 3, 3, 0.7);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border-bottom: 1px solid var(--border-subtle);
+        }
+
+        .nav-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 4.5rem;
+        }
+
+        .logo {
+            font-size: 1.25rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            color: var(--text-primary);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo::before {
+            content: '';
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background: var(--accent);
+            border-radius: 50%;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.3s var(--easing);
+        }
+
+        .nav-links a:hover {
+            color: var(--text-primary);
+        }
+
+        /* Hero Section */
+        .hero {
+            padding-top: 11rem;
+            padding-bottom: 7rem;
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.5rem 1rem;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid var(--border-subtle);
+            border-radius: 9999px;
+            font-size: 0.8rem;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            font-weight: 800;
+            line-height: 1.1;
+            letter-spacing: -0.04em;
+            background: linear-gradient(180deg, #ffffff 0%, #a1a1a6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1.5rem;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: 2.5rem;
+            max-width: 540px;
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: 1rem;
+        }
+
+        /* Preview Card */
+        .preview-card {
+            padding: 2rem;
+            position: relative;
+            transform: perspective(1000px) rotateY(-5deg) rotateX(5deg);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.4);
+        }
+
+        .preview-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 16px;
+            padding: 1px;
+            background: linear-gradient(135deg, rgba(255,255,255,0.2), transparent);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            pointer-events: none;
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1.5rem;
+            font-size: 0.8rem;
+            color: var(--text-tertiary);
+        }
+
+        .status-dot {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #34c759;
+        }
+
+        .status-dot::before {
+            content: '';
+            width: 6px;
+            height: 6px;
+            background: #34c759;
+            border-radius: 50%;
+            box-shadow: 0 0 10px #34c759;
+        }
+
+        .preview-text {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: var(--text-primary);
+            font-style: italic;
+        }
+
+        /* Emotional Hook Section */
+        .emotional-section {
+            padding: 6rem 0;
+        }
+
+        .section-intro {
+            text-align: center;
+            max-width: 600px;
+            margin: 0 auto 4rem auto;
+        }
+
+        .section-intro h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            letter-spacing: -0.03em;
+            margin-bottom: 1rem;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+
+        .hook-card {
+            padding: 2.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hook-card h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            letter-spacing: -0.02em;
+        }
+
+        .hook-card p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .card-glow {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(800px circle at var(--x, 0px) var(--y, 0px), rgba(255,255,255,0.06), transparent 40%);
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        /* Application Generator Section */
+        .generator-section {
+            padding: 6rem 0;
+        }
+
+        .generator-card {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 3.5rem;
+            position: relative;
+        }
+
+        .animated-border {
+            position: absolute;
+            inset: 0;
+            border-radius: 16px;
+            padding: 1.5px;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            background-size: 200% 100%;
+            animation: borderGlow 6s linear infinite;
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            pointer-events: none;
+        }
+
+        @keyframes borderGlow {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 200% 50%; }
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .form-group-full {
+            grid-column: span 2;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .form-group label {
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .form-group input, .form-group textarea, .form-group select {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--border-subtle);
+            border-radius: 8px;
+            padding: 1rem;
+            color: var(--text-primary);
+            font-family: var(--font-sans);
+            font-size: 1rem;
+            transition: all 0.3s var(--easing);
+            outline: none;
+        }
+
+        .form-group input:focus, .form-group textarea:focus, .form-group select:focus {
+            border-color: rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.04);
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.05);
+        }
+
+        .error-msg {
+            color: #ff453a;
+            font-size: 0.8rem;
+            margin-top: 0.25rem;
+            display: none;
+        }
+
+        /* Loading Engine */
+        .loading-container {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 4rem 0;
+            text-align: center;
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid rgba(255,255,255,0.05);
+            border-top-color: var(--accent);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 1.5rem;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Output Core Engine */
+        .output-card {
+            display: none;
+            margin-top: 3rem;
+            padding: 3rem;
+            border-left: 2px solid var(--accent);
+            background: linear-gradient(180deg, rgba(255,255,255,0.02) 0%, transparent 100%);
+            animation: fadeUp 0.8s var(--easing);
+        }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .output-block {
+            margin-bottom: 2rem;
+        }
+
+        .output-block:last-child {
+            margin-bottom: 0;
+        }
+
+        .output-label {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-tertiary);
+            margin-bottom: 0.5rem;
+        }
+
+        .output-val {
+            font-size: 1.15rem;
+            line-height: 1.6;
+            color: var(--text-primary);
+        }
+
+        .output-val-quote {
+            font-size: 1.4rem;
+            font-style: italic;
+            font-weight: 500;
+            color: #fff;
+            line-height: 1.5;
+        }
+
+        .moves-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .moves-list li {
+            display: flex;
+            gap: 0.75rem;
+            align-items: flex-start;
+        }
+
+        .moves-list li::before {
+            content: '→';
+            color: var(--text-secondary);
+        }
+
+        /* Chat Section */
+        .chat-section {
+            padding: 6rem 0;
+        }
+
+        .chat-ui {
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .chat-bubble {
+            max-width: 75%;
+            padding: 1rem 1.5rem;
+            border-radius: 20px;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        .bubble-user {
+            background: rgba(255, 255, 255, 0.06);
+            color: var(--text-primary);
+            align-self: flex-end;
+            border-bottom-right-radius: 4px;
+        }
+
+        .bubble-future {
+            background: var(--text-primary);
+            color: #000;
+            align-self: flex-start;
+            border-bottom-left-radius: 4px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+
+        /* AI Hack Lab */
+        .hack-section {
+            padding: 6rem 0;
+        }
+
+        .hack-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+
+        .hack-card {
+            padding: 2.5rem;
+            border-top: 1px solid rgba(255,255,255,0.15);
+        }
+
+        .hack-card:hover {
+            background: rgba(255,255,255,0.02);
+        }
+
+        .hack-tag {
+            font-size: 0.75rem;
+            color: var(--text-tertiary);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .hack-card h4 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            letter-spacing: -0.01em;
+        }
+
+        .hack-card p {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        /* Dopamine Outro Section */
+        .outro-section {
+            padding: 10rem 0;
+            text-align: center;
+            position: relative;
+        }
+
+        .outro-section h2 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            line-height: 1.2;
+            letter-spacing: -0.04em;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(180deg, #ffffff 0%, #71717a 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .outro-section p {
+            color: var(--text-secondary);
+            font-size: 1.2rem;
+            margin-bottom: 3rem;
+        }
+
+        /* Toast Architecture */
+        .toast-system {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            z-index: 1000;
+            pointer-events: none;
+        }
+
+        .toast {
+            background: #fff;
+            color: #000;
+            padding: 1rem 1.5rem;
+            border-radius: 12px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+            transform: translateY(100px);
+            opacity: 0;
+            transition: all 0.5s var(--easing);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .toast.active {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        /* Responsive Paradigms */
+        @media (max-width: 1024px) {
+            .hero {
+                grid-template-columns: 1fr;
+                text-align: center;
+                gap: 3rem;
+                padding-top: 9rem;
+            }
+            .hero p { margin: 0 auto 2.5rem auto; }
+            .hero-actions { justify-content: center; }
+            .preview-card { transform: none; max-width: 500px; margin: 0 auto; }
+            .grid-3, .hack-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .hero h1 { font-size: 2.75rem; }
+            .grid-3, .hack-grid { grid-template-columns: 1fr; }
+            .form-grid { grid-template-columns: 1fr; }
+            .form-group-full { grid-column: span 1; }
+            .generator-card { padding: 2rem; }
+            .outro-section h2 { font-size: 2.25rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="ambient-glow-1"></div>
+    <div class="ambient-glow-2"></div>
+    <div class="grid-pattern"></div>
+
+    <nav class="navbar">
+        <div class="container nav-container">
+            <a href="#" class="logo">FutureMe</a>
+            <div class="nav-links">
+                <a href="#how-it-works">How It Works</a>
+                <a href="#create">Create</a>
+                <a href="#chat">Chat</a>
+                <a href="#ai-hack">AI Hack</a>
+            </div>
+            <a href="#create" class="btn btn-secondary" style="padding: 0.5rem 1.25rem; font-size: 0.85rem;">Start Now</a>
+        </div>
+    </nav>
+
+    <header class="container hero">
+        <div class="reveal">
+            <div class="badge">Built in Sairaju Labs</div>
+            <h1>Meet the version of you who already made it.</h1>
+            <p>FutureMe helps you reflect, plan, and receive hyper-personalized strategic validation from the exact person you are currently fighting to become.</p>
+            <div class="hero-actions">
+                <a href="#create" class="btn btn-primary interactive-btn">Create My FutureMe</a>
+                <a href="#how-it-works" class="btn btn-secondary interactive-btn">See How It Works</a>
+            </div>
+        </div>
+        <div class="reveal">
+            <div class="glass-panel preview-card">
+                <div class="card-header">
+                    <span>TRANSMISSION SYSTEM</span>
+                    <span class="status-dot">FutureMe generated • 4s ago</span>
+                </div>
+                <p class="preview-text">"You are significantly closer than you think. But your current micro-habits and daily compromises need to rapidly match your premium future identity."</p>
+            </div>
+        </div>
+    </header>
+
+    <section id="how-it-works" class="container emotional-section">
+        <div class="section-intro reveal">
+            <h2>The Architecture of Intent</h2>
+            <p style="color: var(--text-secondary);">An alignment machine operating across three core human vectors.</p>
+        </div>
+        <div class="grid-3">
+            <div class="glass-panel hook-card dynamic-glow reveal">
+                <div class="card-glow"></div>
+                <h3>Goals</h3>
+                <p>Not simple bullet points. We map the ultimate manifestation of your focus, scale, and material outcomes over extreme horizons.</p>
+            </div>
+            <div class="glass-panel hook-card dynamic-glow reveal">
+                <div class="card-glow"></div>
+                <h3>Fears</h3>
+                <p>Isolate the silent compromises and hidden psychological variables that quietly stall execution cycles before they start.</p>
+            </div>
+            <div class="glass-panel hook-card dynamic-glow reveal">
+                <div class="card-glow"></div>
+                <h3>Next Move</h3>
+                <p>The immediate high-leverage tactical step. Clear of noise, optimized purely for structural clarity and immediate execution.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="create" class="container generator-section">
+        <div class="glass-panel generator-card reveal">
+            <div class="animated-border"></div>
+            <h3 style="font-size: 2rem; font-weight: 700; letter-spacing: -0.03em; margin-bottom: 2rem; text-align: center;">Initialize Synchronization Matrix</h3>
+            
+            <form id="future-form" onsubmit="handleGeneration(event)">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="user-name">Identity (Name)</label>
+                        <input type="text" id="user-name" placeholder="e.g. Alex" autocomplete="off">
+                        <div class="error-msg" id="err-name">Identity signature is required.</div>
+                    </div>
+                    <div class="form-group">
+                        <label for="user-age">Current Age</label>
+                        <input type="number" id="user-age" placeholder="e.g. 26" autocomplete="off">
+                        <div class="error-msg" id="err-age">Age matrix coordinate required.</div>
+                    </div>
+                    <div class="form-group form-group-full">
+                        <label for="user-goal">Primary Strategic Horizon (Goal)</label>
+                        <input type="text" id="user-goal" placeholder="e.g. Launching a venture-backed spatial AI startup" autocomplete="off">
+                        <div class="error-msg" id="err-goal">Target horizon cannot be undefined.</div>
+                    </div>
+                    <div class="form-group form-group-full">
+                        <label for="user-struggle">Immediate Chokepoint (Current Struggle)</label>
+                        <textarea id="user-struggle" rows="3" placeholder="e.g. Over-indexing on theoretical planning instead of shipping raw modules daily"></textarea>
+                        <div class="error-msg" id="err-struggle">Chokepoint vectors must be defined.</div>
+                    </div>
+                    <div class="form-group form-group-full">
+                        <label for="user-vision">The One-Year Absolute State (Vision)</label>
+                        <textarea id="user-vision" rows="3" placeholder="e.g. Operating a self-sustaining engineering collective in SF with clear product-market fit"></textarea>
+                        <div class="error-msg" id="err-vision">Core system vision parameters required.</div>
+                    </div>
+                    <div class="form-group form-group-full">
+                        <label for="user-tone">Transmission Easing Tone Selector</label>
+                        <select id="user-tone">
+                            <option value="Motivational">Motivational</option>
+                            <option value="Brutally Honest">Brutally Honest</option>
+                            <option value="Calm Mentor">Calm Mentor</option>
+                            <option value="CEO Mode">CEO Mode</option>
+                        </select>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary interactive-btn" style="width: 100%;">Generate My FutureMe</button>
+            </form>
+
+            <div class="loading-container" id="loading-state">
+                <div class="spinner"></div>
+                <p style="color: var(--text-secondary); font-size: 0.95rem; font-weight: 500; letter-spacing: 0.02em;">Creating your future identity...</p>
+            </div>
+
+            <div class="output-card" id="output-state">
+                <div class="output-block">
+                    <div class="output-label">Message from your FutureMe</div>
+                    <div class="output-val-quote" id="out-message"></div>
+                </div>
+                <div class="output-block">
+                    <div class="output-label">Future Identity Matrix</div>
+                    <div class="output-val" id="out-identity" style="font-weight: 600;"></div>
+                </div>
+                <div class="output-block">
+                    <div class="output-label">Next 3 System Adjustments</div>
+                    <ul class="moves-list" id="out-moves"></ul>
+                </div>
+                <div class="output-block">
+                    <div class="output-label">One Habit to Start Today</div>
+                    <div class="output-val" id="out-habit" style="color: #fff; font-weight: 500;"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="chat" class="container chat-section">
+        <div class="section-intro reveal">
+            <h2>Real-time Convergence</h2>
+            <p style="color: var(--text-secondary);">Direct interface into the generated consciousness engine.</p>
+        </div>
+        <div class="glass-panel chat-ui reveal">
+            <div class="chat-bubble bubble-user">Will I actually make it?</div>
+            <div class="chat-bubble bubble-future">Only if your daily systemic actions completely stop negotiating with your long-term vision. The path is mathematical, not emotional.</div>
+            <div class="chat-bubble bubble-user">What should I focus on this week?</div>
+            <div class="chat-bubble bubble-future">Remove every single luxury distraction. Build exactly one concrete, undeniable proof of micro-progress. Then deliver it directly to the market.</div>
+        </div>
+    </section>
+
+    <section id="ai-hack" class="container hack-section">
+        <div class="section-intro reveal">
+            <h2>Founder Lab Prompt Architecture</h2>
+            <p style="color: var(--text-secondary);">Highly distinct structural prompt systems optimizing vector weights.</p>
+        </div>
+        <div class="hack-grid">
+            <div class="glass-panel hack-card reveal">
+                <span class="hack-tag">Protocol 01</span>
+                <h4>Identity Prompting</h4>
+                <p>Forces the model matrix to simulate an absolute optimized state of execution, stripping generic LLM responses out completely.</p>
+            </div>
+            <div class="glass-panel hack-card reveal">
+                <span class="hack-tag">Protocol 02</span>
+                <h4>Constraint Prompting</h4>
+                <p>Strips out filler adjectives. Limits execution steps to 3 ultra-dense modules to keep operational cognitive overhead near zero.</p>
+            </div>
+            <div class="glass-panel hack-card reveal">
+                <span class="hack-tag">Protocol 03</span>
+                <h4>Reverse Fear Prompting</h4>
+                <p>Inverts current psychological paralysis into definitive physical trajectories by isolating logical fallacies instantly.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="container outro-section reveal">
+        <h2>You did not just build a page.<br>You built a mirror.</h2>
+        <p>FutureMe turns AI from an analytical tool into a raw personal growth experience.</p>
+        <button class="btn btn-primary interactive-btn" onclick="triggerToast()">Share My FutureMe</button>
+    </section>
+
+    <div class="toast-system">
+        <div class="toast" id="share-toast">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+            <span>Your FutureMe moment is ready to share.</span>
+        </div>
+    </div>
+
+    <script>
+        /* Interactive Scroll Observer System */
+        const observerOptions = { root: null, threshold: 0.1, rootMargin: "0px 0px -50px 0px" };
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+        /* Magnetic Mouse Tracker for Glow Gradients */
+        document.querySelectorAll('.dynamic-glow').forEach(card => {
+            card.addEventListener('mousemove', e => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                card.style.setProperty('--x', `${x}px`);
+                card.style.setProperty('--y', `${y}px`);
+            });
+        });
+
+        /* Button Ripple Engine */
+        document.querySelectorAll('.interactive-btn').forEach(button => {
+            button.addEventListener('click', function(e) {
+                const rect = this.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                const ripple = document.createElement('span');
+                ripple.className = 'ripple';
+                ripple.style.left = `${x}px`;
+                ripple.style.top = `${y}px`;
+                
+                this.appendChild(ripple);
+                setTimeout(() => ripple.remove(), 600);
+            });
+        });
+
+        /* Advanced Contextual Text Generation Engine */
+        const toneBlueprints = {
+            "Motivational": {
+                quote: "Listen to me, {name}. The walls you are staring at right now are entirely architectural fabrications. That vision of {vision} isn't just an asset class you want; it is your structural destiny. Stop managing your self-doubt and start accelerating your baseline velocity.",
+                identity: "Optimized High-Impact Catalyst Matrix",
+                moves: ["Instantly dismantle the operational bottleneck around {struggle}.", "Dedicate 90 minutes tomorrow purely to laying concrete foundations for {goal}.", "Publicly document your commitment to the {vision} horizon."],
+                habit: "Wake up 30 minutes earlier exclusively to design system architecture before digital static starts."
+            },
+            "Brutally Honest": {
+                quote: "Let's be clear, {name}. You are currently trying to build a premium future while maintaining cheap, unoptimized daily protocols. You talk intensely about {goal}, but your current friction with {struggle} proves you are prioritizing comfort over actual expansion. Fix the system.",
+                identity: "Uncompromised Pure Execution Engine",
+                moves: ["Kill the exact habit loop causing you to falter on {struggle}.", "Ship a raw, functional component of {goal} within 24 hours. No polish, just execution.", "Aggressively cut out any variable that doesn't compound toward {vision}."],
+                habit: "Complete audit of your time blocks every evening. Zero tolerance for unmapped hours."
+            },
+            "Calm Mentor": {
+                quote: "Take a deep breath, {name}. At your age, it's natural to perceive {struggle} as an insurmountable wall. But remember that achieving {goal} is a game of consistent structural alignment, not frantic energy. Protect your mental clarity.",
+                identity: "Centered Master Architect Mindset",
+                moves: ["Deconstruct your issues with {struggle} into small, addressable parts.", "Consolidate your daily focus to ensure steady, calm velocity on {goal}.", "Quietly refine your environment to reflect the peace required for {vision}."],
+                habit: "Spend 10 minutes in total silence every morning framing your daily intent."
+            },
+            "CEO Mode": {
+                quote: "Allocation optimization is everything, {name}. Right now, {struggle} is eating up key bandwidth that belongs strictly to scaling {goal}. As the operator of your life, you need to treat yourself like a high-performance organization. Optimize for terminal velocity.",
+                identity: "Chief Executive Capitalist Consciousness",
+                moves: ["Outsource, automate, or eliminate the variance behind {struggle}.", "Lock in a predictable milestone for {goal} and hold yourself accountable to it.", "Re-allocate capital and time resources directly toward hitting {vision}."],
+                habit: "Review your operational key metrics every morning before executing tasks."
+            }
+        };
+
+        function handleGeneration(e) {
+            e.preventDefault();
+            
+            // Extract UI Elements
+            const name = document.getElementById('user-name').value.trim();
+            const age = document.getElementById('user-age').value.trim();
+            const goal = document.getElementById('user-goal').value.trim();
+            const struggle = document.getElementById('user-struggle').value.trim();
+            const vision = document.getElementById('user-vision').value.trim();
+            const tone = document.getElementById('user-tone').value;
+
+            // Simple Inline Field Validation Engine
+            let isValid = true;
+            if(!name) { document.getElementById('err-name').style.display = 'block'; isValid = false; } else { document.getElementById('err-name').style.display = 'none'; }
+            if(!age) { document.getElementById('err-age').style.display = 'block'; isValid = false; } else { document.getElementById('err-age').style.display = 'none'; }
+            if(!goal) { document.getElementById('err-goal').style.display = 'block'; isValid = false; } else { document.getElementById('err-goal').style.display = 'none'; }
+            if(!struggle) { document.getElementById('err-struggle').style.display = 'block'; isValid = false; } else { document.getElementById('err-struggle').style.display = 'none'; }
+            if(!vision) { document.getElementById('err-vision').style.display = 'block'; isValid = false; } else { document.getElementById('err-vision').style.display = 'none'; }
+
+            if(!isValid) return;
+
+            // Trigger Engine States
+            document.getElementById('future-form').style.display = 'none';
+            const loader = document.getElementById('loading-state');
+            loader.style.display = 'flex';
+
+            setTimeout(() => {
+                loader.style.display = 'none';
+                
+                // Content Mapping Pipeline
+                const blueprint = toneBlueprints[tone];
+                
+                const processStr = str => str
+                    .replace(/{name}/g, name)
+                    .replace(/{goal}/g, goal)
+                    .replace(/{struggle}/g, struggle)
+                    .replace(/{vision}/g, vision);
+
+                document.getElementById('out-message').innerText = processStr(blueprint.quote);
+                document.getElementById('out-identity').innerText = `${blueprint.identity} (Age Vector: ${parseInt(age) + 5})`;
+                
+                const listContainer = document.getElementById('out-moves');
+                listContainer.innerHTML = '';
+                blueprint.moves.forEach(move => {
+                    const li = document.createElement('li');
+                    li.innerText = processStr(move);
+                    listContainer.appendChild(li);
+                });
+
+                document.getElementById('out-habit').innerText = processStr(blueprint.habit);
+                
+                // Animate Display Response
+                const outputCard = document.getElementById('output-state');
+                outputCard.style.display = 'block';
+            }, 1500);
+        }
+
+        /* Toast Trigger Mechanics */
+        function triggerToast() {
+            const toast = document.getElementById('share-toast');
+            toast.classList.add('active');
+            setTimeout(() => {
+                toast.classList.remove('active');
+            }, 3000);
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FutureMe — Meet the version of you who already made it.</title>
+    <!-- Premium Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Apply premium google font dynamically */
+        :root {
+            --font-sans: 'Outfit', -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, sans-serif;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="ambient-glow-1"></div>
+    <div class="ambient-glow-2"></div>
+    <div class="grid-pattern"></div>
+
+    <nav class="navbar">
+        <div class="container nav-container">
+            <a href="#" class="logo">FutureMe</a>
+            <div class="nav-links">
+                <a href="#how-it-works">How It Works</a>
+                <a href="#create">Create</a>
+                <a href="#chat">Chat</a>
+                <a href="#ai-hack">AI Hack</a>
+            </div>
+            <a href="#create" class="btn btn-secondary" style="padding: 0.5rem 1.25rem; font-size: 0.85rem;">Start Now</a>
+        </div>
+    </nav>
+
+    <header class="container hero">
+        <div class="reveal">
+            <div class="badge">Built in SaiRaju Labs</div>
+            <h1>Meet the version of you who already made it.</h1>
+            <p>FutureMe helps you reflect, plan, and receive hyper-personalized strategic validation from the exact person you are currently fighting to become.</p>
+            <div class="hero-actions">
+                <a href="#create" class="btn btn-primary interactive-btn">Create My FutureMe</a>
+                <a href="#how-it-works" class="btn btn-secondary interactive-btn">See How It Works</a>
+            </div>
+        </div>
+        <div class="reveal">
+            <div class="glass-panel preview-card">
+                <div class="card-header">
+                    <span>TRANSMISSION SYSTEM</span>
+                    <span class="status-dot">FutureMe generated • 4s ago</span>
+                </div>
+                <p class="preview-text">"You are significantly closer than you think. But your current micro-habits and daily compromises need to rapidly match your premium future identity."</p>
+            </div>
+        </div>
+    </header>
+
+    <section id="how-it-works" class="container emotional-section">
+        <div class="section-intro reveal">
+            <h2>The Architecture of Intent</h2>
+            <p style="color: var(--text-secondary);">An alignment machine operating across three core human vectors.</p>
+        </div>
+        <div class="grid-3">
+            <div class="glass-panel hook-card dynamic-glow reveal">
+                <div class="card-glow"></div>
+                <h3>Goals</h3>
+                <p>Not simple bullet points. We map the ultimate manifestation of your focus, scale, and material outcomes over extreme horizons.</p>
+            </div>
+            <div class="glass-panel hook-card dynamic-glow reveal">
+                <div class="card-glow"></div>
+                <h3>Fears</h3>
+                <p>Isolate the silent compromises and hidden psychological variables that quietly stall execution cycles before they start.</p>
+            </div>
+            <div class="glass-panel hook-card dynamic-glow reveal">
+                <div class="card-glow"></div>
+                <h3>Next Move</h3>
+                <p>The immediate high-leverage tactical step. Clear of noise, optimized purely for structural clarity and immediate execution.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="create" class="container generator-section">
+        <div class="glass-panel generator-card reveal">
+            <div class="animated-border"></div>
+            <h3 style="font-size: 2rem; font-weight: 700; letter-spacing: -0.03em; margin-bottom: 2rem; text-align: center;">Initialize Synchronization Matrix</h3>
+            
+            <form id="future-form" onsubmit="handleGeneration(event)">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="user-name">Identity (Name)</label>
+                        <input type="text" id="user-name" placeholder="e.g. SAIRAJU" autocomplete="off">
+                        <div class="error-msg" id="err-name">Identity signature is required.</div>
+                    </div>
+                    <div class="form-group">
+                        <label for="user-age">Current Age</label>
+                        <input type="number" id="user-age" placeholder="e.g. 20" autocomplete="off">
+                        <div class="error-msg" id="err-age">Age matrix coordinate required.</div>
+                    </div>
+                    <div class="form-group form-group-full">
+                        <label for="user-goal">Primary Strategic Horizon (Goal)</label>
+                        <input type="text" id="user-goal" placeholder="e.g. Build a successful AI startup" autocomplete="off">
+                        <div class="error-msg" id="err-goal">Target horizon cannot be undefined.</div>
+                    </div>
+                    <div class="form-group form-group-full">
+                        <label for="user-struggle">Immediate Chokepoint (Current Struggle)</label>
+                        <textarea id="user-struggle" rows="3" placeholder="e.g. Lack of consistency and over-indexing on theoretical planning"></textarea>
+                        <div class="error-msg" id="err-struggle">Chokepoint vectors must be defined.</div>
+                    </div>
+                    <div class="form-group form-group-full">
+                        <label for="user-vision">The One-Year Absolute State (Vision)</label>
+                        <textarea id="user-vision" rows="3" placeholder="e.g. Running a profitable AI company as a self-sustaining engineering collective"></textarea>
+                        <div class="error-msg" id="err-vision">Core system vision parameters required.</div>
+                    </div>
+                    <div class="form-group form-group-full">
+                        <label for="user-tone">Transmission Easing Tone Selector</label>
+                        <select id="user-tone">
+                            <option value="Motivational">Motivational</option>
+                            <option value="Brutally Honest">Brutally Honest</option>
+                            <option value="Calm Mentor">Calm Mentor</option>
+                            <option value="CEO Mode">CEO Mode</option>
+                        </select>
+                    </div>
+                </div>
+                <button type="submit" id="generate-btn" class="btn btn-primary interactive-btn" style="width: 100%;">Generate My FutureMe</button>
+            </form>
+
+            <div class="loading-container" id="loading-state">
+                <div class="spinner"></div>
+                <p id="loading-text" style="color: var(--text-secondary); font-size: 0.95rem; font-weight: 500; letter-spacing: 0.02em;">Creating your future identity...</p>
+            </div>
+
+            <div class="output-card" id="output-state">
+                <div class="output-block">
+                    <div class="output-label">Message from your FutureMe</div>
+                    <div class="output-val-quote" id="out-message"></div>
+                </div>
+                <div class="output-block">
+                    <div class="output-label">Future Identity Matrix</div>
+                    <div class="output-val" id="out-identity" style="font-weight: 600;"></div>
+                </div>
+                <div class="output-block">
+                    <div class="output-label">Next 3 System Adjustments</div>
+                    <ul class="moves-list" id="out-moves"></ul>
+                </div>
+                <div class="output-block">
+                    <div class="output-label">One Habit to Start Today</div>
+                    <div class="output-val" id="out-habit" style="color: #fff; font-weight: 500;"></div>
+                </div>
+                <div class="output-block">
+                    <div class="output-label">Future Warning Vector</div>
+                    <div class="output-warning" id="out-warning"></div>
+                </div>
+                <div class="output-block">
+                    <div class="output-label">Daily Intent Mantra</div>
+                    <div class="output-mantra" id="out-mantra"></div>
+                </div>
+
+                <div class="results-actions">
+                    <button class="btn btn-secondary interactive-btn" onclick="copyResult()">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: 0.5rem;"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                        Copy Result
+                    </button>
+                    <button class="btn btn-secondary interactive-btn" onclick="resetForm()">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: 0.5rem;"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"></path></svg>
+                        Regenerate
+                    </button>
+                    <a href="#chat" class="btn btn-primary interactive-btn" onclick="scrollToChat(event)">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: 0.5rem;"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+                        Start Chat with FutureMe
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="chat" class="container chat-section">
+        <div class="section-intro reveal">
+            <h2>Real-time Convergence</h2>
+            <p style="color: var(--text-secondary);">Direct interface into the generated consciousness engine.</p>
+        </div>
+        <div class="glass-panel chat-ui reveal">
+            <div class="chat-header">
+                <div class="chat-header-title">CONVERGENT CONSCIOUSNESS MATRIX</div>
+                <span class="status-dot">Connection active</span>
+            </div>
+            
+            <div class="chat-messages" id="chat-messages">
+                <!-- Chat messages injected here -->
+            </div>
+
+            <form class="chat-input-area" id="chat-form" onsubmit="handleChatSubmit(event)">
+                <input type="text" id="chat-input" placeholder="Ask your FutureMe anything..." autocomplete="off">
+                <button type="submit" id="chat-send" class="interactive-btn" aria-label="Send transmission">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+                </button>
+            </form>
+        </div>
+    </section>
+
+    <section id="ai-hack" class="container hack-section">
+        <div class="section-intro reveal">
+            <h2>Founder Lab Prompt Architecture</h2>
+            <p style="color: var(--text-secondary);">Highly distinct structural prompt systems optimizing vector weights.</p>
+        </div>
+        <div class="hack-grid">
+            <div class="glass-panel hack-card reveal">
+                <span class="hack-tag">Protocol 01</span>
+                <h4>Identity Prompting</h4>
+                <p>Forces the model matrix to simulate an absolute optimized state of execution, stripping generic LLM responses out completely.</p>
+            </div>
+            <div class="glass-panel hack-card reveal">
+                <span class="hack-tag">Protocol 02</span>
+                <h4>Constraint Prompting</h4>
+                <p>Strips out filler adjectives. Limits execution steps to 3 ultra-dense modules to keep operational cognitive overhead near zero.</p>
+            </div>
+            <div class="glass-panel hack-card reveal">
+                <span class="hack-tag">Protocol 03</span>
+                <h4>Reverse Fear Prompting</h4>
+                <p>Inverts current psychological paralysis into definitive physical trajectories by isolating logical fallacies instantly.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="container outro-section reveal">
+        <h2>You did not just build a page.<br>You built a mirror.</h2>
+        <p>FutureMe turns AI from an analytical tool into a raw personal growth experience.</p>
+        <button class="btn btn-primary interactive-btn" onclick="triggerToast()">Share My FutureMe</button>
+    </section>
+
+    <div class="toast-system">
+        <div class="toast" id="share-toast">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+            <span id="toast-message">Your FutureMe moment is ready to share.</span>
+        </div>
+    </div>
+
+    <!-- Interactive script linking -->
+    <script src="script.js"></script>
+</body>
+</html>
