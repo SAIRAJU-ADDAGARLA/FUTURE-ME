@@ -45,7 +45,7 @@ function initButtonRipples() {
 initButtonRipples();
 
 /* Application State */
-const API_BASE = "http://localhost:5000/api";
+const API_BASE = window.location.protocol === "file:" ? "http://localhost:5000/api" : "/api";
 let userProfile = null;
 let chatHistory = [];
 let loadingInterval = null;

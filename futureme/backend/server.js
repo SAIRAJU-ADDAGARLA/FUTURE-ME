@@ -2,6 +2,7 @@ require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const { GoogleGenerativeAI } = require("@google/generative-ai");
+const path = require("path");
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -176,6 +177,9 @@ Reply in 2-5 short paragraphs. Give at least one clear action.`;
     });
   }
 });
+
+// Serve static frontend files
+app.use(express.static(path.join(__dirname, "../frontend")));
 
 // Start Express Server
 app.listen(PORT, () => {
