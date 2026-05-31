@@ -181,6 +181,11 @@ Reply in 2-5 short paragraphs. Give at least one clear action.`;
 // Serve static frontend files
 app.use(express.static(path.join(__dirname, "../frontend")));
 
+// Catch-all route to serve index.html for any unmatched routes (such as /goal)
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "../frontend/index.html"));
+});
+
 // Start Express Server
 app.listen(PORT, () => {
   console.log(`FutureMe backend listening at http://localhost:${PORT}`);
