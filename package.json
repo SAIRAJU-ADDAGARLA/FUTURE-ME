@@ -1,0 +1,13 @@
+{
+  "name": "futureme-root",
+  "version": "1.0.0",
+  "description": "DevOps delegation root for FutureMe",
+  "main": "futureme/backend/server.js",
+  "scripts": {
+    "build": "cd futureme/backend && npm install",
+    "install": "cd futureme/backend && npm install",
+    "start": "cd futureme/backend && npm start"
+  },
+  "author": "SaiRaju Labs",
+  "license": "MIT"
+}
